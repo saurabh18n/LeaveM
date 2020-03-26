@@ -1,15 +1,14 @@
 ﻿<%@ Page Title="Home" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ehome.aspx.cs" Inherits="LeaveM._Default" %>
 
-<asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server" cssClass="testborder">
+<asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <div class="row row-cols-md-2">
         <div class=" col col-md">
-
             <div class="card mb-2">
                 <div class="card-header">
                     <P>Hello <asp:Label ID="Lbl_empName" runat="server" Text="Employee Name"></asp:Label></P>
                  </div>
                 <div class="card-body">
-                    <p>Greetings</p>
+                    <p>WIN# <asp:Label ID="Lbl_empWin" runat="server" Text="98"></asp:Label> </p>
                 </div>
             </div>
 
@@ -44,28 +43,22 @@
                         </div>
                     </div>
                 </div>
-            </div>
-
-
-            
+            </div>           
 
         </div>
 
         <div class="col-sm">
 
             <div class="card mb-3">
-                <div class="card-header">Expiring</div>
-                <div class="card-body" style="padding: 5px;">
-                    <table class="table-bordered table-hover" style="width: 100%; margin: 0px">
-                        <tr>
-                            <th>Days</th>
-                            <th>Date of Expiry</th>
-                        </tr>
-                        <tr>
-                            <td>5</td>
-                            <td>10-12-2020</td>
-                        </tr>
-                    </table>
+                <div class="card-header">Balance Details</div>
+                <div class="card-body" style="padding: 5px;">                   
+                    <asp:GridView ID="LeaveDetails" runat="server" AutoGenerateColumns="False" CssClass="table-bordered table-hover">
+                        <Columns>
+                            <asp:BoundField DataField="leaveDays" HeaderText="Leave Days" />
+                            <asp:BoundField DataField="expiryDate" HeaderText="Expiring on" />
+                        </Columns>
+                    </asp:GridView>
+
                 </div>
             </div>
 

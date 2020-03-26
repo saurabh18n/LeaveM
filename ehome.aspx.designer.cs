@@ -24,6 +24,15 @@ namespace LeaveM
         protected global::System.Web.UI.WebControls.Label Lbl_empName;
 
         /// <summary>
+        /// Lbl_empWin control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Lbl_empWin;
+
+        /// <summary>
         /// Lbl_leaveBalance control.
         /// </summary>
         /// <remarks>
@@ -49,5 +58,14 @@ namespace LeaveM
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Lbl_leaveTaken;
+
+        /// <summary>
+        /// LeaveDetails control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView LeaveDetails;
     }
 }
