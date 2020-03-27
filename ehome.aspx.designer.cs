@@ -60,12 +60,21 @@ namespace LeaveM
         protected global::System.Web.UI.WebControls.Label Lbl_leaveTaken;
 
         /// <summary>
-        /// LeaveDetails control.
+        /// GV_LeaveDetails control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView LeaveDetails;
+        protected global::System.Web.UI.WebControls.GridView GV_LeaveDetails;
+
+        /// <summary>
+        /// GV_leaveTaken control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView GV_leaveTaken;
     }
 }
