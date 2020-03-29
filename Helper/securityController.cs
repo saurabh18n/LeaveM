@@ -109,5 +109,16 @@ namespace LeaveM
                 return false;
             }
         }
+        public int empid()
+        {
+            if (isLoggedIn())
+            {
+                return ((employee)HttpContext.Current.Session["Employee"]).userID;
+            }
+            else
+            {
+                return 0;
+            }
+        }
     }
 }

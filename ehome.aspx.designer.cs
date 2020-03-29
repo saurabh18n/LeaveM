@@ -42,15 +42,6 @@ namespace LeaveM
         protected global::System.Web.UI.WebControls.Label Lbl_leaveBalance;
 
         /// <summary>
-        /// Lbl_leaveExpiring control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Lbl_leaveExpiring;
-
-        /// <summary>
         /// Lbl_leaveTaken control.
         /// </summary>
         /// <remarks>
@@ -58,6 +49,15 @@ namespace LeaveM
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Lbl_leaveTaken;
+
+        /// <summary>
+        /// GV_yearBalence control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView GV_yearBalence;
 
         /// <summary>
         /// GV_LeaveDetails control.

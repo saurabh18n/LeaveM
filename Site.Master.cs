@@ -13,19 +13,19 @@ namespace LeaveM
         securityController securityController = new securityController();
         protected void Page_Load(object sender, EventArgs e)
         {
-            //if (!IsPostBack)
-            //{
-            //    if (securityController.isLoggedIn())
-            //    {
-            //        TextInfo ti = new CultureInfo("en-US", false).TextInfo;
-            //        LabelName.Text = "Hello " + ti.ToTitleCase(securityController.getUserName());
-            //        switchtoadmin.Visible = securityController.isAdmin();
-            //    }
-            //    else
-            //    {
-            //        Response.Redirect("~/login");
-            //    } 
-            //}
+            if (!IsPostBack)
+            {
+                if (securityController.isLoggedIn())
+                {
+                    TextInfo ti = new CultureInfo("en-US", false).TextInfo;
+                    LabelName.Text = "Hello " + ti.ToTitleCase(securityController.getUserName());
+                    switchtoadmin.Visible = securityController.isAdmin();
+                }
+                else
+                {
+                    Response.Redirect("~/login");
+                }
+            }
         }
     }
 }

@@ -57,7 +57,7 @@
                         <asp:Label ID="LabelName" runat="server" Text=""></asp:Label>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="~/ahome" runat="server" id="switchtoadmin">Switch to Admin</a>
+                        <a class="dropdown-item" href="~/admin" runat="server" id="switchtoadmin">Switch to Admin</a>
                         <a class="dropdown-item" href="#">Change Password</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="/logout">Logout</a>

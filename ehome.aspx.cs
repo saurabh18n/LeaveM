@@ -15,38 +15,35 @@ namespace LeaveM
         securityController sec = new securityController();
         protected void Page_Load(object sender, EventArgs e)
         {
-            #region
-            //if (!IsPostBack)
-            //{
+            if (!IsPostBack)
+            {
+                if (sec.isLoggedIn())
+                {
+                    populateData();
+                    initialiseDataGridViews();
+                }
+                else
+                {
+                    Response.Redirect("~/login");
+                }
+            }
 
-            //    if (sec.isLoggedIn())
-            //    {
-            //        populateData();
-            //    }
-            //    else
-            //    {
-            //        Response.Redirect("~/login");
-            //    }
-
-            //}
-            #endregion
-
-            populateData();
-            initialiseDataGridViews();
+            
         }
         private void populateData()
         {
             DataTable dt = new DataTable();
             DataTable dt1 = new DataTable();
             DataTable dt2 = new DataTable();
+            DataTable dt3 = new DataTable();
+            
             //SqlDataReader reader;
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString))
             {
                 using (SqlCommand command = new SqlCommand("sp_employee_balance", connection))
                 {
                     command.CommandType = System.Data.CommandType.StoredProcedure;
-                    int empid = 1;
-                    command.Parameters.AddWithValue("@empid", empid);
+                    command.Parameters.AddWithValue("@empid", sec.empid());
                     try
                     {
                         connection.Open();
@@ -54,6 +51,7 @@ namespace LeaveM
                         dt.Load(reader);
                         dt1.Load(reader);
                         dt2.Load(reader);
+                        dt3.Load(reader);
                     }
                     catch (SqlException ex)
                     {
@@ -67,27 +65,41 @@ namespace LeaveM
                 Lbl_empWin.Text = dt.Rows[0][0].ToString();
                 Lbl_empName.Text = (string)dt.Rows[0][1];
                 Lbl_leaveBalance.Text = dt.Rows[0][3].ToString();
-                Lbl_leaveExpiring.Text = dt.Rows[0][4].ToString();
                 Lbl_leaveTaken.Text = dt.Rows[0][2].ToString();
-            } //Populate Emp Name Info
+            }
             if(dt1.Rows.Count > 0)
             {
+      
                 GV_LeaveDetails.DataSource = dt1;
                 GV_LeaveDetails.DataBind();
+                GV_LeaveDetails.HeaderRow.TableSection = TableRowSection.TableHeader;
             }
             if(dt2.Rows.Count > 0)
             {
+                
                 GV_leaveTaken.DataSource = dt2;
                 GV_leaveTaken.DataBind();
+                GV_leaveTaken.HeaderRow.TableSection = TableRowSection.TableHeader;
             }
+            if (dt3.Rows.Count > 0)
+            {
+                GV_yearBalence.DataSource = dt3;
+                GV_yearBalence.DataBind();
+                GV_yearBalence.HeaderRow.TableSection = TableRowSection.TableHeader;
+
+            }
+
         }
 
         private void initialiseDataGridViews()
         {
-            GV_LeaveDetails.ShowHeaderWhenEmpty = true;
-            GV_LeaveDetails.HeaderRow.TableSection = TableRowSection.TableHeader;
-            GV_leaveTaken.ShowHeaderWhenEmpty = true;
-            GV_leaveTaken.HeaderRow.TableSection = TableRowSection.TableHeader;
+            GV_LeaveDetails.ShowHeaderWhenEmpty = true;           
+
+            GV_leaveTaken.ShowHeaderWhenEmpty = true;            
+            
+
+            GV_yearBalence.ShowHeaderWhenEmpty = true;
+                        
         }
     }
 }
