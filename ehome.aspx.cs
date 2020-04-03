@@ -43,7 +43,7 @@ namespace LeaveM
                 using (SqlCommand command = new SqlCommand("sp_employee_balance", connection))
                 {
                     command.CommandType = System.Data.CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("@empid", sec.empid());
+                    command.Parameters.AddWithValue("@empid", sec.getempid());
                     try
                     {
                         connection.Open();

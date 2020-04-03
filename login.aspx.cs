@@ -13,6 +13,13 @@ namespace LeaveM
         securityController securityController = new securityController();
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!IsPostBack)
+            {
+                if (securityController.isLoggedIn())
+                {
+                    Response.Redirect("/ehome");
+                }
+            }
 
         }
 

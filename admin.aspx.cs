@@ -24,8 +24,9 @@ namespace LeaveM
                     employeeDetails.Visible = false;
                     AccumulateModel.Visible = false;
                     TakenModel.Visible = false;
-                    accumulateDeleteVacTaken.Visible = false;                    
-                    initialiseComponents();
+                    accumulateDeleteVacTaken.Visible = false;
+                    addEmployee.Visible = false;
+                    initialiseComponents(sender);
                 }
                 else
                 {
@@ -35,7 +36,7 @@ namespace LeaveM
 
         }
 
-        private void initialiseComponents()
+        private void initialiseComponents(object sender)
         {
             GV_employee.ShowHeaderWhenEmpty = true;
             //GV_employee.HeaderRow.TableSection = TableRowSection.TableHeader;
@@ -44,6 +45,9 @@ namespace LeaveM
 
             text_taken_dateto.Attributes.Add("onchange", "updateTakenDays();");
             text_taken_datefrom.Attributes.Add("onchange", "updateTakenDays();");
+            text_addemp_fname.Attributes.Add("onkeyup", "genrateUdername();");
+            text_addemp_lname.Attributes.Add("onkeyup", "genrateUdername();");
+            PopulateEmployeeDD(sender);
         }
 
         protected void btn_search_Click(object sender, EventArgs e)
@@ -77,6 +81,11 @@ namespace LeaveM
                     GV_employee.DataBind();
                     load.Visible = false;
                     employeeSelect.Visible = true;
+                    hideAllModel();
+                    Taken.Visible = true;
+                    Accumulate.Visible = true;
+                    employeeDetails.Visible = false;
+                 
                 }
                 else
                 {
@@ -84,6 +93,14 @@ namespace LeaveM
                 }
                 
             }            
+        }
+
+        private void hideAllModel()
+        {
+            AccumulateModel.Visible = false;
+            TakenModel.Visible = false;
+            Taken.Visible = false;
+            Accumulate.Visible = false;
         }
 
         void populateEmployeeDetails(int empid)
@@ -114,24 +131,19 @@ namespace LeaveM
                     }
                 }
             }
-            if(dt_accumulate.Rows.Count > 0)
-            {
                 GV_Accumulate.DataSource = dt_accumulate;
-                GV_Accumulate.DataBind();
-            }
-            if(dt_taken.Rows.Count > 0)
-            {
+                GV_Accumulate.DataBind();     
                 GV_leaveTaken.DataSource = dt_taken;
                 GV_leaveTaken.DataBind();
-            }
-            if(dt_balance.Rows.Count> 0)
-            {
                 GV_balance.DataSource = dt_balance;
                 GV_balance.DataBind();
-            }
             Lbl_empName.Text = (string)dt_employee.Rows[0][0];
             Lbl_empWin.Text = (string)dt_employee.Rows[0][1];
+            lbl_empusername.Text = (string)dt_employee.Rows[0][3];
+            lbl_empaccountstatus.Text = (bool)dt_employee.Rows[0][2] ? "Locked" : "Unlocked";
+            lbl_emplastlogin.Text = ((DateTime)dt_employee.Rows[0][4]).ToString("MM-dd-yyyy hh:mm:ss");
             load.Visible = false;
+            addEmployee.Visible = false;
             employeeSelect.Visible = false;
             employeeDetails.Visible = true;
         }
@@ -159,12 +171,86 @@ namespace LeaveM
         {
             if (AccumulateModel_headerlab.Text == "Add")
             {
-                leaveAdd(sender);
+                bool saved = false;
+                using (SqlConnection connection = new SqlConnection(constring))
+                {
+                    using (SqlCommand command = new SqlCommand("sp_leave_add", connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.AddWithValue("@empid", (int)ViewState["empid"]);
+                        command.Parameters.AddWithValue("@craditdate", (Convert.ToDateTime(text_accumulate_add_date.Text).Date).ToString("yyyy-MM-dd"));
+                        command.Parameters.AddWithValue("@days", text_accumulate_add_days.Text);
+                        command.Parameters.AddWithValue("@remarks", text_accumulate_add_remark.Text);
+
+                        try
+                        {
+                            connection.Open();
+                            command.ExecuteNonQuery();
+                            saved = true;
+                        }
+                        catch (SqlException ex)
+                        {
+                            string message = "alert('Error " + ex.Message +  "')";
+                            ScriptManager.RegisterStartupScript(sender as Control, GetType(), "alert", message, true);
+
+                        }
+                    }
+                }
+                if (saved)
+                {
+                    populateEmployeeDetails((int)ViewState["empid"]);
+                    accumulateBack_Click(null, null);
+                    string message = "alert('Saved Successfully')";
+                    ScriptManager.RegisterStartupScript(sender as Control, GetType(), "alert", message, true);
+                    clearform();
+                }
+                else
+                {
+                    string message = "alert('Error Please try Again')";
+                    ScriptManager.RegisterStartupScript(sender as Control, GetType(), "alert", message, true);
+                }
             }
             else if(AccumulateModel_headerlab.Text == "Update")
             {
                 {
-                    leaveUpdate(sender, Convert.ToInt32(GV_Accumulate.SelectedRow.Cells[0].Text));
+                    bool saved = false;
+                    using (SqlConnection connection = new SqlConnection(constring))
+                    {
+                        using (SqlCommand command = new SqlCommand("sp_leave_update", connection))
+                        {
+                            command.CommandType = CommandType.StoredProcedure;
+                            command.Parameters.AddWithValue("@vacid", (int)ViewState["vacid"]);
+                            command.Parameters.AddWithValue("@craditdate", (Convert.ToDateTime(text_accumulate_add_date.Text).Date).ToString("yyyy-MM-dd"));
+                            command.Parameters.AddWithValue("@days", text_accumulate_add_days.Text);
+                            command.Parameters.AddWithValue("@remarks", text_accumulate_add_remark.Text);
+
+                            try
+                            {
+                                connection.Open();
+                                command.ExecuteNonQuery();
+                                saved = true;
+                            }
+                            catch (SqlException ex)
+                            {
+                                string message = "alert('Ssql Error " + ex.Message + "')";
+                                ScriptManager.RegisterStartupScript(sender as Control, GetType(), "alert", message, true);
+
+                            }
+                        }
+                    }
+                    if (saved)
+                    {
+                        populateEmployeeDetails(1);
+                        accumulateBack_Click(null, null);
+                        string message = "alert('Saved Successfully')";
+                        ScriptManager.RegisterStartupScript(sender as Control, GetType(), "alert", message, true);
+                        clearform();
+                    }
+                    else
+                    {
+                        string message = "alert('Error Please try Again')";
+                        ScriptManager.RegisterStartupScript(sender as Control, GetType(), "alert", message, true);
+                    }
                 }                
             }
             else if(AccumulateModel_headerlab.Text == "Delete")
@@ -196,21 +282,13 @@ namespace LeaveM
                 ScriptManager.RegisterStartupScript(sender as Control, GetType(), "alert", message, true);
                 populateEmployeeDetails((int)ViewState["empid"]);
                 accumulateBack_Click(null, null);
-
+                clearform();
             }
-        }
-
-        private void hideAll()
-        {
-            Accumulate.Visible = false;
-            Taken.Visible = false;
-            AccumulateModel.Visible = false;
-            TakenModel.Visible = false;
-        }
+        }        
 
         protected void btnAccuAdd_Click(object sender, EventArgs e)
         {
-            hideAll();
+            hideAllModel();
             AccumulateModel_headerlab.Text = "Add";
             AccumulateModel.Visible = true;
 
@@ -226,7 +304,7 @@ namespace LeaveM
             }
             else
             {
-                hideAll();
+                hideAllModel();
                 AccumulateModel_headerlab.Text = "Update";
                 GridViewRow Row = GV_Accumulate.SelectedRow;
                 text_accumulate_add_date.Text = Convert.ToDateTime(Row.Cells[1].Text).Date.ToString("yyyy-MM-dd");
@@ -239,7 +317,7 @@ namespace LeaveM
 
         protected void accumulateBack_Click(object sender, EventArgs e)
         {
-            hideAll();
+            hideAllModel();
             Accumulate.Visible = true;
             Taken.Visible = true;
         }
@@ -254,7 +332,7 @@ namespace LeaveM
             }
             else
             {
-                hideAll();
+                hideAllModel();
                 AccumulateModel_headerlab.Text = "Delete";
                 PopulateleaveDelete(sender, Convert.ToInt32(GV_Accumulate.SelectedRow.Cells[0].Text));
                 GridViewRow Row = GV_Accumulate.SelectedRow;
@@ -265,81 +343,6 @@ namespace LeaveM
 
 
                 AccumulateModel.Visible = true;
-            }
-        }
-
-        private void leaveAdd(object sender)
-        {
-            bool saved = false;
-            using(SqlConnection connection = new SqlConnection(constring))
-            {
-                using (SqlCommand command = new SqlCommand("sp_leave_add", connection))
-                {
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("@empid", (int)ViewState["empid"]);
-                    command.Parameters.AddWithValue("@craditdate",(Convert.ToDateTime(text_accumulate_add_date.Text).Date).ToString("yyyy-MM-dd"));
-                    command.Parameters.AddWithValue("@days",text_accumulate_add_days.Text );
-                    command.Parameters.AddWithValue("@remarks", text_accumulate_add_remark.Text );
-
-                    try
-                    {
-                        connection.Open();
-                        command.ExecuteNonQuery();
-                        saved = true;
-                    }
-                    catch (SqlException ex)
-                    {
-                       
-                    }
-                }
-            }
-            if (saved){
-                populateEmployeeDetails((int)ViewState["empid"]);
-                accumulateBack_Click(null,null);
-                string message = "alert('Saved Successfully')";
-                ScriptManager.RegisterStartupScript(sender as Control, GetType(), "alert", message, true);
-            }else{
-                string message = "alert('Error Please try Again')";
-                ScriptManager.RegisterStartupScript(sender as Control, GetType(), "alert", message, true);
-            }
-        }
-
-        private void leaveUpdate(object sender,int vacid)
-        {
-            bool saved = false;
-            using (SqlConnection connection = new SqlConnection(constring))
-            {
-                using (SqlCommand command = new SqlCommand("sp_leave_update", connection))
-                {
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("@vacid", vacid);
-                    command.Parameters.AddWithValue("@craditdate", (Convert.ToDateTime(text_accumulate_add_date.Text).Date).ToString("yyyy-MM-dd"));
-                    command.Parameters.AddWithValue("@days", text_accumulate_add_days.Text);
-                    command.Parameters.AddWithValue("@remarks", text_accumulate_add_remark.Text);
-
-                    try
-                    {
-                        connection.Open();
-                        command.ExecuteNonQuery();
-                        saved = true;
-                    }
-                    catch (SqlException ex)
-                    {
-
-                    }
-                }
-            }
-            if (saved)
-            {
-                populateEmployeeDetails(1);
-                accumulateBack_Click(null, null);
-                string message = "alert('Saved Successfully')";
-                ScriptManager.RegisterStartupScript(sender as Control, GetType(), "alert", message, true);
-            }
-            else
-            {
-                string message = "alert('Error Please try Again')";
-                ScriptManager.RegisterStartupScript(sender as Control, GetType(), "alert", message, true);
             }
         }
 
@@ -442,7 +445,7 @@ namespace LeaveM
 
         protected void btnTakenAdd_Click(object sender, EventArgs e)
         {
-            hideAll();
+            hideAllModel();
             lbl_TakenModelHeader.Text = "Add Leave Taken";
             TakenModel.Visible = true;
 
@@ -597,7 +600,7 @@ namespace LeaveM
             }
             else
             {
-                hideAll();                
+                hideAllModel();                
                 lbl_TakenModelHeader.Text = "Delete Leave Taken";
                 text_taken_datefrom.Text = Convert.ToDateTime(GV_leaveTaken.SelectedRow.Cells[1].Text).Date.ToString("yyyy-MM-dd");
                 text_taken_datefrom.Enabled = false;
@@ -620,7 +623,7 @@ namespace LeaveM
             }
             else
             {
-                hideAll();
+                hideAllModel();
                 lbl_TakenModelHeader.Text = "Update Leave Taken";
                 text_taken_datefrom.Text = Convert.ToDateTime(GV_leaveTaken.SelectedRow.Cells[1].Text).Date.ToString("yyyy-MM-dd");
                 text_taken_dateto.Text = Convert.ToDateTime(GV_leaveTaken.SelectedRow.Cells[2].Text).Date.ToString("yyyy-MM-dd");
@@ -636,7 +639,180 @@ namespace LeaveM
             populateEmployeeDetails(Convert.ToInt32(GV_employee.Rows[Convert.ToInt32(e.CommandArgument)].Cells[0].Text));
             employeeSelect.Visible = false;
             employeeDetails.Visible = true;
-            AccumulateModel.Visible = true;
+        }
+
+        private void clearform()
+        {
+            text_accumulate_add_date.Text = "";
+            text_accumulate_add_days.Text = "";
+            text_accumulate_add_remark.Text = "";
+            text_taken_datefrom.Text = "";
+            text_taken_dateto.Text = "";
+            text_taken_days.Text = "";
+            text_taken_remark.Text = "";
+        }
+
+        private void PopulateEmployeeDD(object sender)
+        {
+            DataTable dt = new DataTable();
+            using (SqlConnection con = new SqlConnection(constring))
+            {
+                using (SqlCommand command = new SqlCommand("SELECT emp_id,emp_name from tab_employee",con))
+                {
+                    command.CommandType = CommandType.Text;
+                    try
+                    {
+                        con.Open();
+                        dt.Load(command.ExecuteReader());
+                    }
+                    catch (SqlException Ex)
+                    {
+                        string message = "alert('Error " + Ex.Message + "' )";
+                        ScriptManager.RegisterStartupScript(sender as Control, GetType(), "alert", message, true);
+                    }
+
+                }
+            }
+            if(dt.Rows.Count > 0)
+            {
+                dd_employee.DataSource = dt;
+                dd_employee.DataValueField = "emp_id";
+                dd_employee.DataTextField = "emp_name";
+                dd_employee.DataBind();
+            } 
+        }
+
+        protected void dd_employee_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            populateEmployeeDetails(Convert.ToInt32(dd_employee.SelectedValue));
+
+        }
+
+        protected void btn_addEmployee_Click(object sender, EventArgs e)
+        {
+            employeeDetails.Visible = false;
+            load.Visible = false;
+            addEmployee.Visible = true;
+        }
+
+        protected void btn_unlockAccount_Click(object sender, EventArgs e)
+        {
+            string message;
+            using(SqlConnection con = new SqlConnection(constring))
+            {
+                using (SqlCommand command = new SqlCommand("sp_unlockuser", con))
+                {
+                    command.Parameters.AddWithValue("@empid", (int)ViewState["empid"]);
+                    try
+                    {
+                        con.Open();
+                        command.ExecuteNonQuery();
+                        message = "Unlocked Successfully";                      
+
+                    }
+                    catch (SqlException Ex)
+                    {
+                        message = Ex.Message;
+                       
+                    }
+                }
+            }
+            string messagex = "alert('"+ message+"')";
+            ScriptManager.RegisterStartupScript(sender as Control, GetType(), "alert", messagex, true);
+        }
+
+        protected void btn_resetPassword_Click(object sender, EventArgs e)
+        {
+            string message;
+            using (SqlConnection con = new SqlConnection(constring))
+            {
+                using (SqlCommand command = new SqlCommand("sp_resetuserpassword", con))
+                {
+                    command.Parameters.AddWithValue("@empid", (int)ViewState["empid"]);
+                    try
+                    {
+                        con.Open();
+                        command.ExecuteNonQuery();
+                        message = "Password Reseted to employee Win Successfully";
+
+                    }
+                    catch (SqlException Ex)
+                    {
+                        message = Ex.Message;
+                    }
+                }
+            }
+            string messagex = "alert('" + message + "')";
+            ScriptManager.RegisterStartupScript(sender as Control, GetType(), "alert", messagex, true);
+
+        }
+
+        protected void btn_addemp_save_Click(object sender, EventArgs e)
+        {
+            byte status;
+            using (SqlConnection con = new SqlConnection(constring))
+            {
+                using (SqlCommand command = new SqlCommand("sp_addemployee", con))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@empwin", text_addemp_win.Text);
+                    command.Parameters.AddWithValue("@empname", text_addemp_fname.Text + " " + text_addemp_lname.Text);
+                    command.Parameters.AddWithValue("@empusername", text_addemp_uname.Text);
+                    command.Parameters.AddWithValue("@empdepart", text_addemp_department.Text);
+                    command.Parameters.Add("@status", SqlDbType.TinyInt).Direction = ParameterDirection.Output;
+                    try
+                    {
+                        con.Open();
+                        command.ExecuteNonQuery();
+                        status = (byte)command.Parameters["@status"].Value;
+                    }
+                    catch (SqlException Ex)
+                    {
+                        string messagex = "alert('Sql Error " + Ex.Message + "')";
+                        ScriptManager.RegisterStartupScript(sender as Control, GetType(), "alert", messagex, true);
+                        status = 4;
+                    }
+
+                }
+
+            }
+            switch (status)
+            {
+                case 1:
+                    {
+                        string messagex = "alert('Employee WIN already Exists')";
+                        ScriptManager.RegisterStartupScript(sender as Control, GetType(), "alert", messagex, true);
+                        break;
+                    }
+                case 2:
+                    {
+                        string messagex = "alert('Employee username already Exists')";
+                        ScriptManager.RegisterStartupScript(sender as Control, GetType(), "alert", messagex, true);
+                        break;
+                    }
+                case 0:
+                    {
+                        string messagex = "alert('Employee Saved Successfully')";
+                        ScriptManager.RegisterStartupScript(sender as Control, GetType(), "alert", messagex, true);
+                        addEmployee.Visible = false;
+                        load.Visible = true;
+                        break;
+                    }
+                default:
+                    {
+                        string messagex = "alert('Unknown Error')";
+                        ScriptManager.RegisterStartupScript(sender as Control, GetType(), "alert", messagex, true);
+                        break;
+                    }
+
+            }
+        }
+
+        protected void btn_addemp_back_Click(object sender, EventArgs e)
+        {
+            addEmployee.Visible = false;
+            load.Visible = true;
         }
     }
+ 
 }

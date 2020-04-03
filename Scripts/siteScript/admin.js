@@ -46,3 +46,17 @@ function validate_taken() {
     
     
 }
+
+function validateAddemployee(e) {
+    let addform = document.getElementById["adminForm"];
+    if (addform.checkValidity()) {
+        return true;
+    } else {
+        return false;
+    }
+}
+function genrateUdername() {
+
+    text_addemp_uname.value = text_addemp_fname.value + text_addemp_lname.value
+}
+

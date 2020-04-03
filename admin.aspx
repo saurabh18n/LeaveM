@@ -46,16 +46,23 @@
             <ContentTemplate>
                 <div class="" style="top: 0; left: 0; width: 100%">
                     <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
-                        <a class="navbar-brand" href="#">LeaveM</a>
+                        Vacation report
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
                         </button>
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                                <li class="nav-item active">
+                                    <asp:LinkButton ID="btn_addEmployee" runat="server" OnClick="btn_addEmployee_Click" cssClass="btn btn-success mx-3">Add Employee</asp:LinkButton>
+                                </li>
                             </ul>
+                            
                             <div class="form-inline">
                                 <asp:TextBox ID="text_SearchTerm" runat="server" ClientIDMode="Static" CssClass="form-control mr-sm-2"></asp:TextBox>
                                 <asp:Button ID="btn_search" runat="server" CssClass="btn btn-outline-success my-2 my-sm-0" Text="Search" OnClick="btn_search_Click" OnClientClick="return checkTearchTerm();" />
+                            </div>
+                            <div class="form-inline">
+                                <asp:DropDownList ID="dd_employee" runat="server" CssClass="btn dropdown-toggle" OnSelectedIndexChanged="dd_employee_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
                             </div>
                             <div class="form-inline my-2 my-lg-0 dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -109,8 +116,24 @@
                                         <asp:Label ID="Lbl_empName" runat="server" Text="Employee Name"></asp:Label></strong>
                                 </div>
                                 <div class="card-body">
-                                    WIN#
-                                    <asp:Label ID="Lbl_empWin" runat="server" Text="98"></asp:Label>
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item">
+                                            WIN# <asp:Label ID="Lbl_empWin" runat="server" Text="98"></asp:Label>
+                                        </li>
+                                        <li class="list-group-item">
+                                           Username <asp:Label ID="lbl_empusername" runat="server" Text="98"></asp:Label>
+                                        </li>
+                                        <li class="list-group-item">
+                                            Last Login <asp:Label ID="lbl_emplastlogin" runat="server" Text="98"></asp:Label>
+                                        </li>
+                                        <li class="list-group-item">
+                                            Account Status <asp:Label ID="lbl_empaccountstatus" runat="server" Text="98"></asp:Label>                                     
+                                        </li>
+                                        <li class="list-group-item">
+                                            <asp:Button ID="btn_unlockAccount" runat="server" cssClass="btn btn-primary" Text="Unlock A/c" OnClick="btn_unlockAccount_Click" />
+                                            <asp:Button ID="btn_resetPassword" runat="server" cssClass="btn btn-primary" Text="Reset Pass" OnClick="btn_resetPassword_Click" />
+                                        </li>
+                                    </ul> 
                                 </div>
                             </div>
 
@@ -121,7 +144,7 @@
                                 <div class="card-body">
                                     <asp:GridView ID="GV_balance" runat="server" ClientIDMode="Static" AutoGenerateColumns="False" CssClass="table-bordered w-100 text-center">
                                         <Columns>
-                                            <asp:BoundField DataField="vac_expirydate" HeaderText="Expiry Date" HeaderStyle-HorizontalAlign="Center" DataFormatString="{0:d}">
+                                            <asp:BoundField DataField="vac_expirydate" HeaderText="Expiration Date" HeaderStyle-HorizontalAlign="Center" DataFormatString="{0:d}">
                                                 <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" />
                                                 <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle" />
                                             </asp:BoundField>                                           
@@ -152,7 +175,7 @@
                                                 <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" />
                                                 <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle" />
                                             </asp:BoundField>
-                                            <asp:BoundField DataField="vac_credit" HeaderText="Cradited" HeaderStyle-HorizontalAlign="Center">
+                                            <asp:BoundField DataField="vac_credit" HeaderText="Cradit" HeaderStyle-HorizontalAlign="Center">
                                                 <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" />
                                                 <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle" />
                                             </asp:BoundField>
@@ -160,7 +183,7 @@
                                                 <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" />
                                                 <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle" />
                                             </asp:BoundField>
-                                            <asp:BoundField DataField="vac_remark" HeaderText="Remarks">
+                                            <asp:BoundField DataField="vac_remark" HeaderText="Note">
                                                 <HeaderStyle HorizontalAlign="Left" VerticalAlign="Middle" />
                                                 <ItemStyle HorizontalAlign="Left" VerticalAlign="Middle" />
                                             </asp:BoundField>
@@ -203,7 +226,7 @@
                                                 <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" />
                                                 <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle" />
                                             </asp:BoundField>
-                                            <asp:BoundField DataField="vaca_remark" HeaderText="Remarks" HeaderStyle-HorizontalAlign="Center">
+                                            <asp:BoundField DataField="vaca_remark" HeaderText="Note" HeaderStyle-HorizontalAlign="Center">
                                                 <HeaderStyle HorizontalAlign="Left" VerticalAlign="Middle" />
                                                 <ItemStyle HorizontalAlign="Left" VerticalAlign="Middle" />
                                             </asp:BoundField>
@@ -238,9 +261,9 @@
                                 </div>
 
                                 <div class="form-group row">
-                                    <label class="col-sm-2 col-form-label">Remark</label>
+                                    <label class="col-sm-2 col-form-label">Note</label>
                                     <div class="col-sm-10">
-                                        <asp:TextBox ID="text_accumulate_add_remark" runat="server" ClientIDMode="Static" CssClass="form-control form-control-md" TextMode="MultiLine" placeholder="Remarks"></asp:TextBox>
+                                        <asp:TextBox ID="text_accumulate_add_remark" runat="server" ClientIDMode="Static" CssClass="form-control form-control-md" TextMode="MultiLine" placeholder="Note"></asp:TextBox>
                                     </div>
                                 </div>
 
@@ -306,7 +329,7 @@
                                 </div>
 
                                 <div class="form-group row">
-                                    <label class="col-sm-2 col-form-label">Remark</label>
+                                    <label class="col-sm-2 col-form-label">Note</label>
                                     <div class="col-sm-10">
                                         <asp:TextBox ID="text_taken_remark" runat="server" ClientIDMode="Static" CssClass="form-control form-control-md" TextMode="MultiLine" placeholder="Remarks"></asp:TextBox>
                                     </div>
@@ -324,6 +347,47 @@
                         </div>
                         
                     </div>
+
+
+                    <div id="addEmployee" runat="server" class="row row-cols-1 mt-2 align-content-center">
+                        <div class="col-md-3 align-self-center mx-auto">
+                            <div class="form-row mb-2">
+                                <label>Win</label>
+                                <asp:TextBox ID="text_addemp_win" runat="server" 
+                                    ClientIDMode="Static" cssClass="form-control" required="true"></asp:TextBox>                            </div>
+                            
+                            <div class="form-row mb-2">
+                                <label>First Name</label>
+                                <asp:TextBox ID="text_addemp_fname" runat="server" 
+                                    cssClass="form-control" required="true" AutoPostBack="false"
+                                    ></asp:TextBox>                            
+
+                            </div>
+                            
+                            <div class="form-row mb-2">
+                                <label>Last Name</label>
+                                <asp:TextBox ID="text_addemp_lname" runat="server" 
+                                    cssClass="form-control" required="true" 
+                                    AutoPostBack="false"></asp:TextBox>
+                            </div>
+                            
+                            <div class="form-row mb-2">
+                                <label>Username</label>
+                                <asp:TextBox ID="text_addemp_uname" runat="server" cssClass="form-control" required="true"></asp:TextBox>                            
+
+                            </div>
+                            
+                            <div class="form-row mb-2">
+                                <label>Department</label>
+                                <asp:TextBox ID="text_addemp_department" runat="server" cssClass="form-control" required="true"></asp:TextBox>                            </div>
+
+                            <div class="form-row mb-2">
+                                <asp:Button ID="btn_addemp_back" runat="server" Text="Back" CssClass="btn btn-secondary float-left" OnClick="btn_addemp_back_Click" />
+                                <asp:Button ID="btn_addemp_save" runat="server" Text="Save" CssClass="btn btn-primary ml-auto" OnClick="btn_addemp_save_Click" OnClientClick="validateAddemployee()" />                                
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </ContentTemplate>
         </asp:UpdatePanel>

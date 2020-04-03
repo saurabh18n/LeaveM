@@ -109,7 +109,7 @@ namespace LeaveM
                 return false;
             }
         }
-        public int empid()
+        public int getempid()
         {
             if (isLoggedIn())
             {
