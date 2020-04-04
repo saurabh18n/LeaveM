@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" Title="Admin" AutoEventWireup="true" EnableEventValidation="false" CodeBehind="admin.aspx.cs" Inherits="LeaveM.admin" %>
+﻿<%@ Page Language="C#" Title="Admin" AutoEventWireup="true" EnableEventValidation="false" CodeBehind="admin.aspx.cs" Inherits="VacationReport.admin" %>
 
 <!DOCTYPE html>
 
@@ -14,7 +14,6 @@
 
     <webopt:BundleReference runat="server" Path="~/Content/css" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-
 </head>
 <body>
 
@@ -66,7 +65,7 @@
                             </div>
                             <div class="form-inline my-2 my-lg-0 dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <asp:Label ID="LabelName" runat="server" Text="Admin Name"></asp:Label>
+                                    <asp:Label ID="lbl_adminName" runat="server" Text=""></asp:Label>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="~/ehome" runat="server" id="switchtoadmin">Switch View</a>

@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace LeaveM
+namespace VacationReport
 {
 
 
@@ -69,13 +69,13 @@ namespace LeaveM
         protected global::System.Web.UI.WebControls.DropDownList dd_employee;
 
         /// <summary>
-        /// LabelName control.
+        /// lbl_adminName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LabelName;
+        protected global::System.Web.UI.WebControls.Label lbl_adminName;
 
         /// <summary>
         /// switchtoadmin control.

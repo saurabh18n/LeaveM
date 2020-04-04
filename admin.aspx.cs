@@ -8,7 +8,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace LeaveM
+namespace VacationReport
 {
     public partial class admin : System.Web.UI.Page
     {
@@ -27,6 +27,7 @@ namespace LeaveM
                     accumulateDeleteVacTaken.Visible = false;
                     addEmployee.Visible = false;
                     initialiseComponents(sender);
+                    lbl_adminName.Text = "Hello " + securityController.getUserName();
                 }
                 else
                 {
@@ -702,6 +703,7 @@ namespace LeaveM
             {
                 using (SqlCommand command = new SqlCommand("sp_unlockuser", con))
                 {
+                    command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@empid", (int)ViewState["empid"]);
                     try
                     {
@@ -728,7 +730,9 @@ namespace LeaveM
             {
                 using (SqlCommand command = new SqlCommand("sp_resetuserpassword", con))
                 {
+                    command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@empid", (int)ViewState["empid"]);
+
                     try
                     {
                         con.Open();
@@ -742,7 +746,7 @@ namespace LeaveM
                     }
                 }
             }
-            string messagex = "alert('" + message + "')";
+            string messagex = "alert('" + message + "');";
             ScriptManager.RegisterStartupScript(sender as Control, GetType(), "alert", messagex, true);
 
         }

@@ -1,9 +1,9 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="changepassword.aspx.cs" Inherits="LeaveM.changePassword" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="changepassword.aspx.cs" Inherits="VacationReport.changePassword" %>
 <html>
 <head>
 <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title></title>
+    <title>Change Password</title>
 
     <asp:PlaceHolder runat="server">
         <%: Scripts.Render("~/bundles/modernizr") %>
@@ -41,15 +41,15 @@
             <h3>Change Password</h3>
             <div class="form-group">
                 <label for="exampleInputEmail1">Old password</label>
-                <asp:TextBox ID="text_oldpass" runat="server" class="form-control"></asp:TextBox>
+                <asp:TextBox ID="text_oldpass" runat="server" class="form-control" TextMode="Password"></asp:TextBox>
             </div>
             <div class="form-group">
                 <label for="exampleInputEmail1">New password</label>
-                <asp:TextBox ID="textnewpassword" runat="server" class="form-control"></asp:TextBox>
+                <asp:TextBox ID="textnewpassword" runat="server" class="form-control" TextMode="Password"></asp:TextBox>
             </div>
             <div class="form-group">
                 <label for="exampleInputEmail1">Re Type password</label>
-                <asp:TextBox ID="text_retypepassword" runat="server" class="form-control"></asp:TextBox>
+                <asp:TextBox ID="text_retypepassword" runat="server" class="form-control" TextMode="Password"></asp:TextBox>
             </div>
             <div class="form-row">
                 <a class="btn btn-secondary" href="/login">Back</a>

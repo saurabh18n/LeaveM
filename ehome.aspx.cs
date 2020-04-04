@@ -8,9 +8,9 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace LeaveM
+namespace VacationReport
 {
-    public partial class _Default : Page
+    public partial class ehome : Page
     {
         securityController sec = new securityController();
         protected void Page_Load(object sender, EventArgs e)

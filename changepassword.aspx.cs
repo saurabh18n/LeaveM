@@ -8,7 +8,7 @@ using System.Data.SqlClient;
 using System.Configuration;
 using System.Data;
 
-namespace LeaveM
+namespace VacationReport
 {
     
     public partial class changePassword : System.Web.UI.Page

@@ -7,11 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace LeaveM
+namespace VacationReport
 {
 
 
-    public partial class _Default
+    public partial class ehome
     {
 
         /// <summary>

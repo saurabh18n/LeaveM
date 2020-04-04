@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace LeaveM
+namespace VacationReport
 {
     public partial class logout : System.Web.UI.Page
     {
