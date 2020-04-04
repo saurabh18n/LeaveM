@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -14,6 +15,7 @@ namespace VacationReport
     {
         string constring = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
         securityController securityController = new securityController();
+        TextInfo ti = new CultureInfo("en-US", false).TextInfo;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -27,7 +29,8 @@ namespace VacationReport
                     accumulateDeleteVacTaken.Visible = false;
                     addEmployee.Visible = false;
                     initialiseComponents(sender);
-                    lbl_adminName.Text = "Hello " + securityController.getUserName();
+                    
+                    lbl_adminName.Text = "Hello " + ti.ToTitleCase(securityController.getUserName());
                 }
                 else
                 {
@@ -138,7 +141,7 @@ namespace VacationReport
                 GV_leaveTaken.DataBind();
                 GV_balance.DataSource = dt_balance;
                 GV_balance.DataBind();
-            Lbl_empName.Text = (string)dt_employee.Rows[0][0];
+            Lbl_empName.Text = ti.ToTitleCase((string)dt_employee.Rows[0][0]);
             Lbl_empWin.Text = (string)dt_employee.Rows[0][1];
             lbl_empusername.Text = (string)dt_employee.Rows[0][3];
             lbl_empaccountstatus.Text = (bool)dt_employee.Rows[0][2] ? "Locked" : "Unlocked";
@@ -290,6 +293,7 @@ namespace VacationReport
         protected void btnAccuAdd_Click(object sender, EventArgs e)
         {
             hideAllModel();
+            clearForms();
             AccumulateModel_headerlab.Text = "Add";
             AccumulateModel.Visible = true;
 
@@ -306,6 +310,7 @@ namespace VacationReport
             else
             {
                 hideAllModel();
+                clearForms();
                 AccumulateModel_headerlab.Text = "Update";
                 GridViewRow Row = GV_Accumulate.SelectedRow;
                 text_accumulate_add_date.Text = Convert.ToDateTime(Row.Cells[1].Text).Date.ToString("yyyy-MM-dd");
@@ -334,6 +339,7 @@ namespace VacationReport
             else
             {
                 hideAllModel();
+                clearForms();
                 AccumulateModel_headerlab.Text = "Delete";
                 PopulateleaveDelete(sender, Convert.ToInt32(GV_Accumulate.SelectedRow.Cells[0].Text));
                 GridViewRow Row = GV_Accumulate.SelectedRow;
@@ -601,7 +607,8 @@ namespace VacationReport
             }
             else
             {
-                hideAllModel();                
+                hideAllModel();
+                clearForms();
                 lbl_TakenModelHeader.Text = "Delete Leave Taken";
                 text_taken_datefrom.Text = Convert.ToDateTime(GV_leaveTaken.SelectedRow.Cells[1].Text).Date.ToString("yyyy-MM-dd");
                 text_taken_datefrom.Enabled = false;
@@ -625,6 +632,7 @@ namespace VacationReport
             else
             {
                 hideAllModel();
+                clearForms();
                 lbl_TakenModelHeader.Text = "Update Leave Taken";
                 text_taken_datefrom.Text = Convert.ToDateTime(GV_leaveTaken.SelectedRow.Cells[1].Text).Date.ToString("yyyy-MM-dd");
                 text_taken_dateto.Text = Convert.ToDateTime(GV_leaveTaken.SelectedRow.Cells[2].Text).Date.ToString("yyyy-MM-dd");
@@ -721,6 +729,7 @@ namespace VacationReport
             }
             string messagex = "alert('"+ message+"')";
             ScriptManager.RegisterStartupScript(sender as Control, GetType(), "alert", messagex, true);
+            populateEmployeeDetails((int)ViewState["empid"]);
         }
 
         protected void btn_resetPassword_Click(object sender, EventArgs e)
@@ -816,6 +825,23 @@ namespace VacationReport
         {
             addEmployee.Visible = false;
             load.Visible = true;
+        }
+
+        private void clearForms()
+        {   
+            text_taken_datefrom.Text = "";
+            text_taken_datefrom.Enabled = true;
+            text_taken_dateto.Text = "";
+            text_taken_dateto.Enabled = true;
+            text_taken_days.Text = "";
+            text_taken_days.Enabled = true;
+
+            text_accumulate_add_date.Text = "";
+            text_accumulate_add_date.Enabled = true;
+            text_accumulate_add_days.Text = "";
+            text_accumulate_add_days.Visible = true;
+            text_accumulate_add_remark.Text = "";
+            text_accumulate_add_remark.Enabled = true; 
         }
     }
  

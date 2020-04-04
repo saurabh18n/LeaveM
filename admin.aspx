@@ -330,7 +330,7 @@
                                 <div class="form-group row">
                                     <label class="col-sm-2 col-form-label">Note</label>
                                     <div class="col-sm-10">
-                                        <asp:TextBox ID="text_taken_remark" runat="server" ClientIDMode="Static" CssClass="form-control form-control-md" TextMode="MultiLine" placeholder="Remarks"></asp:TextBox>
+                                        <asp:TextBox ID="text_taken_remark" runat="server" ClientIDMode="Static" CssClass="form-control form-control-md" TextMode="MultiLine" placeholder="Note"></asp:TextBox>
                                     </div>
                                 </div>                                
                             </div>
