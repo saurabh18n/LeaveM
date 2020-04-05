@@ -452,6 +452,7 @@ namespace VacationReport
         protected void btnTakenAdd_Click(object sender, EventArgs e)
         {
             hideAllModel();
+            clearForms();
             lbl_TakenModelHeader.Text = "Add Leave Taken";
             TakenModel.Visible = true;
 
