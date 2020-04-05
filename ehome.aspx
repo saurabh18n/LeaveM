@@ -42,27 +42,26 @@
                 <div class="card-body" style="padding: 5px;">
                     <asp:GridView ID="GV_yearBalence" runat="server" ClientIDMode="Static" AutoGenerateColumns="False" CssClass="table-bordered table-hover w-100 text-center">
                         <Columns>
-                            <asp:BoundField DataField="year" HeaderText="Year" HeaderStyle-HorizontalAlign="Center">
+                            <asp:BoundField DataField="vac_year" HeaderText="Year" HeaderStyle-HorizontalAlign="Center">
                                 <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" />
                                 <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle" />
                             </asp:BoundField>
-                            <asp:BoundField DataField="accumulate" HeaderText="Accumulated" HeaderStyle-HorizontalAlign="Center" DataFormatString="{0:d}">
+                            <asp:BoundField DataField="vac_credit" HeaderText="Accumulated" HeaderStyle-HorizontalAlign="Center" DataFormatString="{0:d}">
                                 <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" />
                                 <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle" />
                             </asp:BoundField>
-                            <asp:BoundField DataField="available" HeaderText="Available Days">
+                            <asp:BoundField DataField="vac_taken" HeaderText="Taken Days">
                                 <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" />
                                 <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle" />
                             </asp:BoundField>
+                            <asp:BoundField DataField="vac_balance" HeaderText="Available Days">
+                                <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" />
+                                <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle" />
+                            </asp:BoundField>                      
 
-                            <asp:BoundField DataField="taken" HeaderText="Taken Days">
+                            <asp:BoundField DataField="vac_expired" HeaderText="Expired Days">
                                 <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" />
                                 <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle" />
-                            </asp:BoundField>
-
-                            <asp:BoundField DataField="expired" HeaderText="expired">
-                                <HeaderStyle CssClass="d-none" />
-                                <ItemStyle CssClass="d-none" />
                             </asp:BoundField>
                         </Columns>
                     </asp:GridView>

@@ -68,8 +68,7 @@ namespace VacationReport
                 Lbl_leaveTaken.Text = dt.Rows[0][2].ToString();
             }
             if(dt1.Rows.Count > 0)
-            {
-      
+            {      
                 GV_LeaveDetails.DataSource = dt1;
                 GV_LeaveDetails.DataBind();
                 GV_LeaveDetails.HeaderRow.TableSection = TableRowSection.TableHeader;
@@ -86,9 +85,7 @@ namespace VacationReport
                 GV_yearBalence.DataSource = dt3;
                 GV_yearBalence.DataBind();
                 GV_yearBalence.HeaderRow.TableSection = TableRowSection.TableHeader;
-
             }
-
         }
 
         private void initialiseDataGridViews()

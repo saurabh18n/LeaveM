@@ -104,6 +104,7 @@ namespace VacationReport
             AccumulateModel.Visible = false;
             TakenModel.Visible = false;
             Taken.Visible = false;
+            accumulateDeleteVacTaken.Visible = false;
             Accumulate.Visible = false;
         }
 
