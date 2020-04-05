@@ -14,6 +14,11 @@
 
     <webopt:BundleReference runat="server" Path="~/Content/css" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <style>
+        .w-20{
+            width:15%
+        }
+    </style>
 </head>
 <body>
 
@@ -170,20 +175,21 @@
                                                 <ItemStyle CssClass="d-none" />
                                             </asp:BoundField>
 
-                                            <asp:BoundField DataField="vac_createdate" HeaderText="Date" HeaderStyle-HorizontalAlign="Center" DataFormatString="{0:d}">
-                                                <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" />
-                                                <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle" />
+                                            <asp:BoundField DataField="vac_createdate" HeaderText="Date" 
+                                                HeaderStyle-HorizontalAlign="Center" DataFormatString="{0:d}"                                       >
+                                                <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" CssClass="w-20"/>
+                                                <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle" CssClass="w-20" />
                                             </asp:BoundField>
-                                            <asp:BoundField DataField="vac_credit" HeaderText="Cradit" HeaderStyle-HorizontalAlign="Center">
-                                                <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" />
+                                            <asp:BoundField DataField="vac_credit" HeaderText="Credit" HeaderStyle-HorizontalAlign="Center">
+                                                <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" Width="20%" />
                                                 <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle" />
                                             </asp:BoundField>
                                             <asp:BoundField DataField="vac_balance" HeaderText="Balance" HeaderStyle-HorizontalAlign="Center">
-                                                <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" />
+                                                <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" Width="20%" />
                                                 <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle" />
                                             </asp:BoundField>
                                             <asp:BoundField DataField="vac_remark" HeaderText="Note">
-                                                <HeaderStyle HorizontalAlign="Left" VerticalAlign="Middle" />
+                                                <HeaderStyle HorizontalAlign="Left" VerticalAlign="Middle"  />
                                                 <ItemStyle HorizontalAlign="Left" VerticalAlign="Middle" />
                                             </asp:BoundField>
                                         </Columns>
@@ -213,16 +219,16 @@
                                                 <ItemStyle CssClass="d-none" />
                                             </asp:BoundField>
                                             <asp:BoundField DataField="vaca_start" HeaderText="Start" DataFormatString="{0:d}" HeaderStyle-HorizontalAlign="Center">
-                                                <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" />
+                                                <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" CssClass="w-20" />
                                                 <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle" />
                                             </asp:BoundField>
                                             <asp:BoundField DataField="vaca_end" HeaderText="End" DataFormatString="{0:d}" HeaderStyle-HorizontalAlign="Center">
-                                                <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" />
+                                                <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" CssClass="w-20" />
                                                 <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle" />
                                             </asp:BoundField>
 
                                             <asp:BoundField DataField="vaca_days" HeaderText="Days" HeaderStyle-HorizontalAlign="Center">
-                                                <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" />
+                                                <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" CssClass="w-20" />
                                                 <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle" />
                                             </asp:BoundField>
                                             <asp:BoundField DataField="vaca_remark" HeaderText="Note" HeaderStyle-HorizontalAlign="Center">

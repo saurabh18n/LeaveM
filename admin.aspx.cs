@@ -159,7 +159,7 @@ namespace VacationReport
                 Row.Attributes["class"] = "";
             }
             GV_Accumulate.Rows[GV_Accumulate.SelectedIndex].Attributes["class"] = "bg-primary text-white";
-            System.Diagnostics.Debug.WriteLine("Hello");
+            ViewState.Add("vacid", Convert.ToInt32(GV_Accumulate.Rows[GV_Accumulate.SelectedIndex].Cells[0].Text));
         }
 
         protected void GV_Accumulate_RowCreated(object sender, GridViewRowEventArgs e)
@@ -238,13 +238,12 @@ namespace VacationReport
                             {
                                 string message = "alert('Ssql Error " + ex.Message + "')";
                                 ScriptManager.RegisterStartupScript(sender as Control, GetType(), "alert", message, true);
-
                             }
                         }
                     }
                     if (saved)
                     {
-                        populateEmployeeDetails(1);
+                        populateEmployeeDetails((int)ViewState["empid"]);
                         accumulateBack_Click(null, null);
                         string message = "alert('Saved Successfully')";
                         ScriptManager.RegisterStartupScript(sender as Control, GetType(), "alert", message, true);
