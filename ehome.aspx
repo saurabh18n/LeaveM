@@ -1,8 +1,8 @@
 ﻿<%@ Page Title="Home" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ehome.aspx.cs" Inherits="VacationReport.ehome" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-    <div class="row row-cols-md-2">
-        <div class=" col col-md">
+    <div class="row  w-100"> <%--row-cols-md-2--%>
+        <div class="col col-5">
             <div class="card mb-2">
                 <div class="card-header">
                     Hello <strong>
@@ -70,9 +70,7 @@
             </div>
         </div>
 
-
-
-        <div class="col-sm">
+        <div class="col col-7">
             <div class="card mb-3">
                 <div class="card-header">Balance Details</div>
                 <div class="card-body" style="padding: 5px;">
@@ -99,24 +97,30 @@
             <div class="card mb-3">
                 <div class="card-header">Taken</div>
                 <div class="card-body" style="padding: 5px;">
-                    <asp:GridView ID="GV_leaveTaken" runat="server" AutoGenerateColumns="False" class="table-bordered table-hover table-striped w-100 text-center">
+                    <asp:GridView ID="GV_leaveTaken" runat="server" AutoGenerateColumns="False" class="table-bordered w-100 text-center">
                         <Columns>
                             <asp:BoundField HeaderText="Start" DataField="vaca_start" DataFormatString="{0:d}" HeaderStyle-HorizontalAlign="Center">
-                                <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" />
+                                <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" Width="15%" />
                                 <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle" />
                             </asp:BoundField>
                             <asp:BoundField HeaderText="End" DataField="vaca_end" DataFormatString="{0:d}" HeaderStyle-HorizontalAlign="Center">
-                                <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" />
+                                <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" Width="15%" />
                                 <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle" />
                             </asp:BoundField>
                             <asp:BoundField HeaderText="Days" DataField="vaca_days" HeaderStyle-HorizontalAlign="Center">
-                                <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" />
+                                <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" Width="15%" />
                                 <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle" />
                             </asp:BoundField>
-                            <asp:BoundField HeaderText="Year Taken" DataField="vaca_year" HeaderStyle-HorizontalAlign="Center">
-                                <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" />
+                            <asp:BoundField HeaderText="Year Taken" DataField="vaca_year" HeaderStyle-HorizontalAlign="Center" >
+                                <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" Width="15%" />
                                 <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle" />
                             </asp:BoundField>
+                            <asp:BoundField HeaderText="Note" DataField="vaca_remark" HeaderStyle-HorizontalAlign="Center">
+                                <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" />
+                                <ItemStyle HorizontalAlign="Left" VerticalAlign="Middle" />
+                            </asp:BoundField>
+
+
                         </Columns>
                     </asp:GridView>
                 </div>

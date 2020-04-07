@@ -493,7 +493,7 @@ namespace VacationReport
                 }
                 if (status)
                 {
-                    string message = "alert('Saved Successfully " + statusText +"' )";
+                    string message = "alert('Saved Successfully \\n" + statusText +"' )";
                     ScriptManager.RegisterStartupScript(sender as Control, GetType(), "alert", message, true);
 
                 }
@@ -540,7 +540,7 @@ namespace VacationReport
                 }
                 if (status)
                 {
-                    string message = "alert('Updated Successfully " + stmessage + "')";
+                    string message = "alert('Updated Successfully \\n " + stmessage + "')";
                     ScriptManager.RegisterStartupScript(sender as Control, GetType(), "alert", message, true);
                     populateEmployeeDetails((int)ViewState["empid"]);
                     accumulateBack_Click(null, null);
@@ -836,7 +836,8 @@ namespace VacationReport
             text_taken_dateto.Enabled = true;
             text_taken_days.Text = "";
             text_taken_days.Enabled = true;
-
+            text_taken_remark.Text = "";
+            text_taken_remark.Enabled = true;
             text_accumulate_add_date.Text = "";
             text_accumulate_add_date.Enabled = true;
             text_accumulate_add_days.Text = "";
